@@ -33,7 +33,7 @@ timesheetsRouter.get('/', (req, res, next) => {
             if (err) {
                 next(err);
             } else {
-                res.status(200).json({timesheets: data});
+                res.status(200).send({timesheets: data});
             }
         });
 });
@@ -50,7 +50,7 @@ timesheetsRouter.post('/', validateTimesheet, (req, res, next) => {
                         if (err) {
                             next(err);
                         } else {
-                            res.status(201).json({timesheet: data});
+                            res.status(201).send({timesheet: data});
                         }
                     });
             }
@@ -70,7 +70,7 @@ timesheetsRouter.put('/:timesheetId', validateTimesheet, (req, res, next) => {
                         if (err) {
                             next(err);
                         } else {
-                            res.status(200).json({timesheet: data});
+                            res.status(200).send({timesheet: data});
                         }
                     });
             }
