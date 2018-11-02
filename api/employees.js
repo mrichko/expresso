@@ -10,7 +10,7 @@ const validateEmployee = (req, res, next) => {
     req.position = req.body.employee.position;
     req.wage = req.body.employee.wage;
     req.isCurrentEmployee = req.body.employee.isCurrentEmployee === 0 ? 0 : 1;
-    if (!req.name || !req.position || !req.wage) {
+    if (!req.name || !req.position || !req.wage || !req.isCurrentEmployee) {
         return res.sendStatus(400);
     }
     else {

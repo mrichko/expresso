@@ -1,6 +1,7 @@
 const sqlite3 = require('sqlite3');
 const db = new sqlite3.Database('./database.sqlite');
 
+//Creating employee table
 db.serialize(() => {
     db.run('DROP TABLE IF EXISTS Employee');
     db.run(`CREATE TABLE Employee (
@@ -11,13 +12,14 @@ db.serialize(() => {
           is_current_employee INTEGER DEFAULT 1,
           PRIMARY KEY (id)
     );`, if err => {
-      console.log('There was a issue in creating the Employee database')
+      console.log('There was an error when creating the Employee table')
     } else {
       console.log('The Employee database was created succesfully!')
     }
 
 });
 
+//Creating timesheet table
 db.run('DROP TABLE IF EXISTS Timesheet');
 db.run(`CREATE TABLE Timesheet (
       id INTEGER REQUIRED,
@@ -28,6 +30,8 @@ db.run(`CREATE TABLE Timesheet (
       FOREIGN KEY(employee_id) REFERENCES Employee(id)
 );`);
 
+
+// Creating menu table
 db.run('DROP TABLE IF EXISTS Menu');
 db.run(`CREATE TABLE Menu (
       id INTEGER REQUIRED,
@@ -35,6 +39,8 @@ db.run(`CREATE TABLE Menu (
       PRIMARY KEY (id)
 );`);
 
+
+//Creating menu item table
 db.run('DROP TABLE IF EXISTS MenuItem');
 db.run(`CREATE TABLE IF NOT EXISTS MenuItem (
         id INTEGER NOT NULL,
