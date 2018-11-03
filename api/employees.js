@@ -25,7 +25,7 @@ employeesRouter.param('employeeId', (req, res, next, empId) => {
       if (err) {
         next(err);
       } else if (data) {
-        req.employee = data;
+        req.employee.id = data;
       } else {
         res.sendStatus(404);
       }
@@ -35,22 +35,27 @@ employeesRouter.param('employeeId', (req, res, next, empId) => {
 
 employeesRouter.use('/:employeeId/timesheets', timesheetsRouter);
 
-employeesRouter.get('/', (req, res, next) =>{
-  db.all('SELECT * FROM employee WHERE is_current_employee = 1',
-      (err, data) => {
-        if (error) {
-          next(err);
-        } else {
-          res.status(200).send({employees: data})
-        }
-      }
-    )
+employeesRouter.get('/', (req, res, next) => {
+    db.all('SELECT * FROM Employee WHERE is_current_employee = 1',
+        (err, data) => {
+            if (err) {
+                next(err);
+            } else {
+                res.status(200).send({employees: data});
+            }
+        });
 });
 
 
-employeesRouter.post('/', (req, res, next) => {
+employeesRouter.get('/:employeeId', (req, res, next) => {
+    res.status(200).send({employee: req.employee});
+});
+
+
+
+employeesRouter.post('/', validateEmployee, (req, res, next) => {
   db.run(`INSERT INTO Employee (name, wage, position, is_current_employee)
-  VALUES ("${req.name}", "${req.position}", "${req.wage}", "${req.is_current_employee}")`,
+  VALUES ("${req.name}", "${req.position}", "${req.wage}", "${req.isCurrentEmployee}")`,
     function(err) {
       if (err) {
         next(err);

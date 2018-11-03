@@ -9,7 +9,8 @@ db.serialize(() => {
     name TEXT NOT NULL,
     position TEXT NOT NULL,
     wage INTEGER NOT NULL,
-    is_current_employee INTEGER DEFAULT 1
+    is_current_employee INTEGER NOT NULL DEFAULT 1,
+    PRIMARY KEY (id)
   )`,
    (error) => {
     if (error) {
@@ -39,18 +40,14 @@ db.serialize(() => {
 });
 
 // Creating menu table
-db.run('DROP TABLE IF EXISTS Menu');
-db.run(`CREATE TABLE Menu (
-      id INTEGER NOT NULL,
-      title TEXT NOT NULL,
-)`,
-(error) => {
- if (error) {
-   console.log('There was an error when creating the timesheet')
- } else {
-   console.log('You successfully created the timesheet')
- }
-});
+
+    db.run('DROP TABLE IF EXISTS Menu');
+    db.run(`CREATE TABLE IF NOT EXISTS Menu (
+            id INTEGER NOT NULL,
+            title TEXT NOT NULL,
+            PRIMARY KEY(id)
+        );`);
+
 
 
 //Creating menu item table
