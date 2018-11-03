@@ -15,7 +15,6 @@ const validateMenu = (req, res, next) => {
     }
 };
 
-
 menusRouter.param('menuId', (req, res, next, menuid) => {
     db.get('SELECT * FROM Menu WHERE id = $id', {$id: menuid},
         (err, data) => {
