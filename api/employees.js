@@ -20,7 +20,7 @@ const validateEmployee = (req, res, next) => {
 
 
 employeesRouter.param('employeeId', (req, res, next, empId) => {
-  db.get('SELECT * FROM Employee WHERE id = $id', {$id: empId},
+  db.get('SELECT * FROM Employee WHERE Employee.id = $employeeId', {$employeeId: employeeId},
     (err, data) => {
       if (err) {
         next(err);
@@ -48,7 +48,7 @@ employeesRouter.get('/', (req, res, next) => {
 
 
 employeesRouter.get('/:employeeId', (req, res, next) => {
-    res.status(200).send({employee: req.employee});
+    res.status(200).send({employee: data});
 });
 
 
